@@ -104,7 +104,7 @@ public class Persona {
     
     public int getedad() {
      LocalDate hoy = LocalDate.now();
-     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
      LocalDate fn = LocalDate.parse(this.fecha_nacimiento, fmt);
      Period periodo = Period.between(fn, hoy);
         return periodo.getYears();

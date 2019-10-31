@@ -30,6 +30,18 @@ public class Persona {
         this.celular = celular;
     }
 
+    public Persona(String nombre, String apellido, String fecha_nacimiento, String identificacion, String genero, String direccion, String email, String telefono, String celular) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.identificacion = identificacion;
+        this.genero = genero;
+        this.direccion = direccion;
+        this.email = email;
+        this.telefono = telefono;
+        this.celular = celular;
+    }
+
     public String getNombre() {
         return nombre.toUpperCase();
     }

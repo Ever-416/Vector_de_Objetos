@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +30,8 @@ import javax.swing.table.DefaultTableModel;
 public class Controller {
 BufferedReader leer = new BufferedReader(new InputStreamReader(System.in));    
 
-Persona[] classroom = new Persona[5];
+//Persona[] classroom = new Persona[5];
+ArrayList<Persona>classroom=new ArrayList();
 JFrame show = new JFrame();
     public Controller() {
     this.loadMenu();
@@ -63,28 +65,29 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
     String acu="";
     //"Crear" llenar Array
     public void createArray() throws IOException{
-      /*Inicio*/  for (int i = 0; i < 5; i++) {
-        classroom[i]= new Persona();
+        String n="", a="", fN="", id="", g="", d="", em="", tel="", cel="";
+      /*Inicio*/ for (int i = 0; i < 2; i++) {
         System.out.print("Digite nombre de persona "+i+":              ");
-        this.classroom[i].setNombre(leer.readLine());
+        n=leer.readLine();     
         System.out.print("Digite apellido de persona "+i+":            ");
-        this.classroom[i].setApellido(leer.readLine());
+        a=leer.readLine(); 
         System.out.print("Digite fecha de nacimiento de persona "+i+": ");
-        this.classroom[i].setFecha_nacimiento(leer.readLine());
+        fN=leer.readLine(); 
         System.out.print("Digite identificacion de persona "+i+":      ");
-        this.classroom[i].setIdentificacion(leer.readLine());
+        id=leer.readLine(); 
         System.out.print("Digite genero de persona "+i+":              ");
-        this.classroom[i].setGenero(leer.readLine());
+        g=leer.readLine(); 
         System.out.print("Digite direccion de persona "+i+":           ");
-        this.classroom[i].setDireccion(leer.readLine());
+        d=leer.readLine(); 
         System.out.print("Digite email de persona "+i+":               ");
-        this.classroom[i].setEmail(leer.readLine());
+        em=leer.readLine(); 
         System.out.print("Digite telefono de persona "+i+":            ");
-        this.classroom[i].setTelefono(leer.readLine());
+        tel=leer.readLine(); 
         System.out.print("Digite celular de persona "+i+":             ");
-        this.classroom[i].setCelular(leer.readLine());  
+        cel=leer.readLine();  
+        this.classroom.add(new Persona(n, a, fN, id, g, d, em, tel, cel));
         System.out.println("\n------------------------------------------------------------------\n");
-        }    
+        } 
         System.out.println("\n\n\n\n\n\n\n"); /*fin */
       
    /*
@@ -217,8 +220,8 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
     
     DefaultTableModel modelo = new DefaultTableModel(null, nombreColumnas);
     
-    for (int i = 0; i < 5; i++){
-    String datos[] = {classroom[i].getNombre(), classroom[i].getApellido(), classroom[i].getIdentificacion(), String.valueOf(classroom[i].getedad())+" AÑOS", classroom[i].getGenero(), classroom[i].getDireccion(), classroom[i].getCelular(), classroom[i].getTelefono(), classroom[i].getEmail()};    
+    for (int i = 0; i < 2; i++){
+    String datos[] = {classroom.get(i).getNombre(), classroom.get(i).getApellido(), classroom.get(i).getIdentificacion(), String.valueOf(classroom.get(i).getedad())+" AÑOS", classroom.get(i).getGenero(), classroom.get(i).getDireccion(), classroom.get(i).getCelular(), classroom.get(i).getTelefono(), classroom.get(i).getEmail()};    
     modelo.addRow(datos);
     }    
     

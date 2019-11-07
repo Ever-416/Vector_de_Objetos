@@ -4,6 +4,7 @@ package lista_de_personas;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 
 public class Persona {
@@ -126,4 +127,12 @@ public class Persona {
       
         return this.nombre+" "+this.apellido;
     }
+  /*  ArrayList<Masa_Corporal>historial=new ArrayList();
+    ArrayList<String>mes=new ArrayList();
+    
+    public void addHisIMC(String Mes, double altura, double peso){
+    historial.add(new Masa_Corporal(altura, peso, getedad()));
+    mes.add(Mes);
+    }*/
+    
 }

@@ -30,7 +30,6 @@ import javax.swing.table.DefaultTableModel;
 public class Controller {
 BufferedReader leer = new BufferedReader(new InputStreamReader(System.in));    
 
-//Persona[] classroom = new Persona[5];
 ArrayList<Persona>classroom=new ArrayList();
 JFrame show = new JFrame();
     public Controller() {
@@ -66,7 +65,10 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
     //"Crear" llenar Array
     public void createArray() throws IOException{
         String n="", a="", fN="", id="", g="", d="", em="", tel="", cel="";
-      /*Inicio*/ for (int i = 0; i < 2; i++) {
+        int i=0, aña=0;
+        boolean act=true;
+      /*Inicio*/ while (act) {
+        i++; aña=0;
         System.out.print("Digite nombre de persona "+i+":              ");
         n=leer.readLine();     
         System.out.print("Digite apellido de persona "+i+":            ");
@@ -87,6 +89,16 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
         cel=leer.readLine();  
         this.classroom.add(new Persona(n, a, fN, id, g, d, em, tel, cel));
         System.out.println("\n------------------------------------------------------------------\n");
+        do{
+          aña=Integer.parseInt(JOptionPane.showInputDialog("¿Desea añadir otra persona? si(1) / no(2)"));
+          if (aña==1) {
+              act=true;
+          }else if (aña==2){
+          act=false;
+          }else{
+          JOptionPane.showMessageDialog(null, "Opcion no valida");
+          }
+        }while (aña!=1 && aña!=2);
         } 
         System.out.println("\n\n\n\n\n\n\n"); /*fin */
       
@@ -220,7 +232,7 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
     
     DefaultTableModel modelo = new DefaultTableModel(null, nombreColumnas);
     
-    for (int i = 0; i < 2; i++){
+    for (int i = 0; i < classroom.size(); i++){
     String datos[] = {classroom.get(i).getNombre(), classroom.get(i).getApellido(), classroom.get(i).getIdentificacion(), String.valueOf(classroom.get(i).getedad())+" AÑOS", classroom.get(i).getGenero(), classroom.get(i).getDireccion(), classroom.get(i).getCelular(), classroom.get(i).getTelefono(), classroom.get(i).getEmail()};    
     modelo.addRow(datos);
     }    

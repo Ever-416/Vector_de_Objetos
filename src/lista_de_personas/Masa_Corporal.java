@@ -7,20 +7,18 @@ public class Masa_Corporal {
     double altura;//cm
     double peso;//kg
     int edad;
+    double IMC;
+    String mes;
+    String estado;
 
-    public Masa_Corporal(double altura, double peso, int edad) {
+    public Masa_Corporal(double altura, double peso, int edad, String mes) {
         this.altura = altura;
         this.peso = peso;
         this.edad = edad;
-    }
-    
-    public double calMasaC(){
-    double IMC=(peso/Math.pow(altura, 2))*10000;
-        return IMC;
+        this.mes = mes;
     }
     
     public String estadoIMC(){
-        String estado="";
         if (edad>=0 && edad<=3) {
             if (calMasaC()<=14) {
              estado="Delgadez";   
@@ -93,6 +91,28 @@ public class Masa_Corporal {
              estado="Obeso";   
             }  
         }
-    return estado;
+        return estado;
     }
+
+    public double calMasaC(){
+    IMC=(peso/Math.pow(altura, 2))*10000;
+    return IMC;
+    }
+    
+    public double getAltura() {
+        return altura;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public String getMes() {
+        return mes;
+    }
+    
 }

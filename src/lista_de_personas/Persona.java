@@ -127,12 +127,15 @@ public class Persona {
       
         return this.nombre+" "+this.apellido;
     }
-  /*  ArrayList<Masa_Corporal>historial=new ArrayList();
-    ArrayList<String>mes=new ArrayList();
+  
     
-    public void addHisIMC(String Mes, double altura, double peso){
-    historial.add(new Masa_Corporal(altura, peso, getedad()));
-    mes.add(Mes);
-    }*/
+    ArrayList<Masa_Corporal>historial=new ArrayList();
+    
+    public void addHisIMC(String mes, double altura, double peso){
+    historial.add(new Masa_Corporal(altura, peso, getedad(), mes));
+    }
+    public ArrayList<Masa_Corporal> getHisIMC(){  
+   return historial;     
+}
     
 }

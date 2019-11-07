@@ -37,28 +37,77 @@ JFrame show = new JFrame();
     }
    //Cargar menu   
     public void loadMenu(){
-this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opcion:\n1.Crear Array de personas\n2.Mostrar Array de persona\n3.Salir")));
+this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opcion:\n1.Crear Array de personas\n2.Mostrar Array de persona\n3.Ver Historial de persona\n4.Salir")));
     } 
    //Ejecutar opciones
     public void optionSelected(int op){
     switch (op){
         case 1:
-    {
+    
         try {
             this.createArray();
         } catch (IOException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    
     break;
         case 2:
     this.showArray();
     break;
-            case 3:
+        case 3:
+    {
+        try {
+            this.menuIMC();
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+            break;
+            case 4:
                 System.exit(0);
     
     }
     }
+    
+    public void menuIMC() throws IOException{
+   int op=Integer.parseInt(JOptionPane.showInputDialog("Que decea hacer:\n1.Registrar Historial IMC\n2.Mostrar Historial IMC"));
+    
+   String id=JOptionPane.showInputDialog("Por favor digite el numero de identificacion de la persona");
+    int i=0, ind=0;
+    boolean act=true;
+     do {                
+         if (classroom.get(i).getIdentificacion()==id) {
+         ind=i; 
+         act=false;
+         }
+       i++;    
+     } while (act && i<classroom.size()); 
+   
+     switch (op){
+        case 1: 
+            System.out.print("Por favor digite el mes en que se realiza la consulta: ");
+            String mes=leer.readLine();
+            System.out.print("Por favor digite la altura en cm de la persona:        ");
+            double altura=Double.parseDouble(leer.readLine());
+            System.out.print("Por favor digite el peso de la persona:                ");
+            double peso=Double.parseDouble(leer.readLine());
+     classroom.get(ind).addHisIMC(mes, altura, peso);
+    
+    break;
+        case 2:
+        String nombreColumnas[] = {"MES","ALTURA","PESO","EDAD","MASA CORPORAL","ESTADO"}; 
+        DefaultTableModel modelo = new DefaultTableModel(null, nombreColumnas);
+        
+       ArrayList<Masa_Corporal>Masa_Corporal=;
+        
+        for (int i = 0; i < n; i++){
+    String datos[] = {classroom.get(i).getNombre(), classroom.get(i).getApellido(), classroom.get(i).getIdentificacion(), String.valueOf(classroom.get(i).getedad())+" AÑOS", classroom.get(i).getGenero(), classroom.get(i).getDireccion(), classroom.get(i).getCelular(), classroom.get(i).getTelefono(), classroom.get(i).getEmail()};    
+    modelo.addRow(datos);
+    }
+        
+    }
+    }
+    
     int i=1;
     int l=0;
     String acu="";
@@ -266,4 +315,6 @@ tabla.setFont(new Font("Tahoma", Font.PLAIN, 10));
     show.add(boton); 
     show.show();
     }
+    
+    
 }

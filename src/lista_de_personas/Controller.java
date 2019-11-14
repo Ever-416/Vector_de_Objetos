@@ -37,12 +37,12 @@ JFrame show = new JFrame();
     }
    //Cargar menu   
     public void loadMenu(){
-this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opcion:\n1.Añadir persona al Array de personas\n2.Mostrar Array de personas\n3.Historial de persona\n4.Salir")));
+this.optionSelected(JOptionPane.showInputDialog("Escoja una opcion:\n1.Añadir persona al Array de personas\n2.Mostrar Array de personas\n3.Historial de persona\n4.Salir"));
     } 
    //Ejecutar opciones
-    public void optionSelected(int op){
+    public void optionSelected(String op){
     switch (op){
-        case 1:
+        case "1":
     
         try {
             this.createArray();
@@ -51,10 +51,10 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
         }
     
     break;
-        case 2:
+        case "2":
     this.showArray();
     break;
-        case 3:
+        case "3":
     {
         try {
             this.menuIMC();
@@ -63,7 +63,7 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
         }
     }
             break;
-            case 4:
+            case "4":
                 System.exit(0);
             break;
             
@@ -74,10 +74,10 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
     }
     
     public void menuIMC() throws IOException{
-   int op=Integer.parseInt(JOptionPane.showInputDialog("Que decea hacer:\n1.Registrar Historial IMC\n2.Mostrar Historial IMC\n3.Volver al menu"));
+   /*int*/ String op=/*Integer.parseInt(*/JOptionPane.showInputDialog("Que decea hacer:\n1.Registrar Historial IMC\n2.Mostrar Historial IMC\n3.Volver al menu");
    int ind=-1;
    boolean act=true;
-   if(op==1 || op==2){
+   if(/*op==1 || op==2*/op.equals("1") || op.equals("2")){
   String id=JOptionPane.showInputDialog("Por favor digite el numero de identificacion de la persona");
    int i=0;
   
@@ -96,7 +96,7 @@ if(classroom.size()>0){
     }
      
    }else{
-       if (op!=3){
+       if (/*op!=3*/ !op.equals("3")){
 JOptionPane.showMessageDialog(null, "Opcion no valida");
     this.menuIMC();}else{
        this.loadMenu();
@@ -104,7 +104,7 @@ JOptionPane.showMessageDialog(null, "Opcion no valida");
    }
         if (ind!=-1) {
      switch (op){
-        case 1: 
+        case "1": 
             int j=0, aña=0;
         boolean acti=true;
       /*Inicio*/ while (acti) {
@@ -131,7 +131,7 @@ JOptionPane.showMessageDialog(null, "Opcion no valida");
         System.out.println("\n\n\n\n\n\n\n");
         this.loadMenu();
     break;
-        case 2:
+        case "2":
         String nombreColumnas[] = {"MES","ALTURA","PESO","MASA CORPORAL","ESTADO"}; 
         DefaultTableModel modelo = new DefaultTableModel(null, nombreColumnas);
         

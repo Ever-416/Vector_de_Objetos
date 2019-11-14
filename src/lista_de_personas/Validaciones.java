@@ -32,10 +32,16 @@ public class Validaciones {
     }
     
     public static boolean isValid_date(String data){
-        if (!data.equals("")) {
+        String regex="^(((([0-2][0-9]|30)\\/((0(1|[3-9]))|1[0-2]))|(31\\/(0[1|3|5|7|8]|1[0|2])))\\/([0-9]{4,4}))|([0-2][0-8]\\/02\\/[0-9][0-9]{4,4})|(29\\/02\\/[0-9][0-9]([0|2|4|6|8][0|4|8]|[1|3|5|7|9][2|6]))$";
+        Pattern patron = Pattern.compile(regex); 
+        Matcher m = patron.matcher("29/02/0000");
+        boolean validar = m.find(); 
+        
+        if (m.find()) {
             
         }
-    return true;    
+        
+        return validar;   
     }
 
 }

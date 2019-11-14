@@ -37,7 +37,7 @@ JFrame show = new JFrame();
     }
    //Cargar menu   
     public void loadMenu(){
-this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opcion:\n1.Crear Array de personas\n2.Mostrar Array de persona\n3.Ver Historial de persona\n4.Salir")));
+this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opcion:\n1.Añadir persona al Array de personas\n2.Mostrar Array de personas\n3.Historial de persona\n4.Salir")));
     } 
    //Ejecutar opciones
     public void optionSelected(int op){
@@ -65,26 +65,50 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
             break;
             case 4:
                 System.exit(0);
-    
+            break;
+            
+            default:
+    JOptionPane.showMessageDialog(null, "Opcion no valida");
+    this.loadMenu();
     }
     }
     
     public void menuIMC() throws IOException{
-   int op=Integer.parseInt(JOptionPane.showInputDialog("Que decea hacer:\n1.Registrar Historial IMC\n2.Mostrar Historial IMC"));
-    
-   String id=JOptionPane.showInputDialog("Por favor digite el numero de identificacion de la persona");
-    int i=0, ind=0;
-    boolean act=true;
-     do {                
-         if (classroom.get(i).getIdentificacion()==id) {
+   int op=Integer.parseInt(JOptionPane.showInputDialog("Que decea hacer:\n1.Registrar Historial IMC\n2.Mostrar Historial IMC\n3.Volver al menu"));
+   int ind=-1;
+   boolean act=true;
+   if(op==1 || op==2){
+  String id=JOptionPane.showInputDialog("Por favor digite el numero de identificacion de la persona");
+   int i=0;
+  
+if(classroom.size()>0){
+   do {                
+         if (classroom.get(i).getIdentificacion().equals(id)) {
          ind=i; 
          act=false;
          }
        i++;    
-     } while (act && i<classroom.size()); 
-   
+     } while (act && i<classroom.size());
+} 
+    if (ind==-1) {
+      JOptionPane.showMessageDialog(null, "Paciente no encontrado");
+      this.menuIMC();
+    }
+     
+   }else{
+       if (op!=3){
+JOptionPane.showMessageDialog(null, "Opcion no valida");
+    this.menuIMC();}else{
+       this.loadMenu();
+       }
+   }
+        if (ind!=-1) {
      switch (op){
         case 1: 
+            int j=0, aña=0;
+        boolean acti=true;
+      /*Inicio*/ while (acti) {
+        j++; aña=0;
             System.out.print("Por favor digite el mes en que se realiza la consulta: ");
             String mes=leer.readLine();
             System.out.print("Por favor digite la altura en cm de la persona:        ");
@@ -92,20 +116,71 @@ this.optionSelected(Integer.parseInt(JOptionPane.showInputDialog("Escoja una opc
             System.out.print("Por favor digite el peso de la persona:                ");
             double peso=Double.parseDouble(leer.readLine());
      classroom.get(ind).addHisIMC(mes, altura, peso);
-    
+      System.out.println("\n------------------------------------------------------------------\n");
+        do{
+          aña=Integer.parseInt(JOptionPane.showInputDialog("¿Desea seguir registrando? si(1) / no(2)"));
+          if (aña==1) {
+              act=true;
+          }else if (aña==2){
+          acti=false;
+          }else{
+          JOptionPane.showMessageDialog(null, "Opcion no valida");
+          }
+        }while (aña!=1 && aña!=2);
+        } 
+        System.out.println("\n\n\n\n\n\n\n");
+        this.loadMenu();
     break;
         case 2:
-        String nombreColumnas[] = {"MES","ALTURA","PESO","EDAD","MASA CORPORAL","ESTADO"}; 
+        String nombreColumnas[] = {"MES","ALTURA","PESO","MASA CORPORAL","ESTADO"}; 
         DefaultTableModel modelo = new DefaultTableModel(null, nombreColumnas);
         
-       ArrayList<Masa_Corporal>Masa_Corporal=;
+        String name="";
         
-        for (int i = 0; i < n; i++){
-    String datos[] = {classroom.get(i).getNombre(), classroom.get(i).getApellido(), classroom.get(i).getIdentificacion(), String.valueOf(classroom.get(i).getedad())+" AÑOS", classroom.get(i).getGenero(), classroom.get(i).getDireccion(), classroom.get(i).getCelular(), classroom.get(i).getTelefono(), classroom.get(i).getEmail()};    
+        if(classroom.size()>0){
+        for (int m= 0; m < classroom.get(ind).getHisIMC().size(); m++){ 
+    String datos[] = {classroom.get(ind).getHisIMC().get(m).getMes(), String.valueOf(classroom.get(ind).getHisIMC().get(m).getAltura())+" cm", String.valueOf(classroom.get(ind).getHisIMC().get(m).getPeso())+" kg", String.valueOf(classroom.get(ind).getHisIMC().get(m).calMasaC())+" kg/m^2",classroom.get(ind).getHisIMC().get(m).estadoIMC()};    
     modelo.addRow(datos);
-    }
+    } 
+    name=classroom.get(ind).getFullnombre();    
+        }
+    
+        JScrollPane esc = new JScrollPane();
+    JTable tabla = new JTable(modelo);
+    JLabel etiqueta = new JLabel("Paciente:                                                   "+name);
+    etiqueta.setFont(new Font("Tahoma", Font.PLAIN, 18));
+    etiqueta.setBounds(15, 19, 479, 30);
+tabla.setFont(new Font("Tahoma", Font.PLAIN, 12));
+    esc.setViewportView(tabla);    
+    esc.setBounds(new Rectangle(10,70,611,165));
+    JButton boton = new JButton("VOLVER");
+    boton.setBounds(new Rectangle(492,255,100,28)); 
+    
+    ActionListener escuchador = new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e) {    
+            show.remove(esc);
+            show.remove(boton);
+            show.remove(etiqueta);
+            show.hide();
+            loadMenu();
+        }
+    };
         
-    }
+          boton.addActionListener(escuchador);
+    
+     show.setLayout(null);
+    show.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    show.setSize(637, 333);  
+    show.setResizable(false);
+    show.setLocationRelativeTo(null);
+    show.add(esc); 
+    show.add(boton);
+    show.add(etiqueta);
+    show.show(); 
+    
+     }
+    } 
     }
     
     int i=1;

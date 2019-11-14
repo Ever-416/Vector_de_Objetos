@@ -95,7 +95,7 @@ public class Masa_Corporal {
     }
 
     public double calMasaC(){
-    IMC=(peso/Math.pow(altura, 2))*10000;
+    IMC=(double)Math.round(((peso/Math.pow(altura, 2))*10000) * 100d) / 100d;
     return IMC;
     }
     

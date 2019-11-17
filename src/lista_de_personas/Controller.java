@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -107,15 +109,42 @@ JOptionPane.showMessageDialog(null, "Opcion no valida");
         case "1": 
             int j=0, aña=0;
         boolean acti=true;
+        String mes, altura, peso;
       /*Inicio*/ while (acti) {
-        j++; aña=0;
-            System.out.print("Por favor digite el mes en que se realiza la consulta: ");
-            String mes=leer.readLine();
-            System.out.print("Por favor digite la altura en cm de la persona:        ");
-            double altura=Double.parseDouble(leer.readLine());
-            System.out.print("Por favor digite el peso de la persona:                ");
-            double peso=Double.parseDouble(leer.readLine());
-     classroom.get(ind).addHisIMC(mes, altura, peso);
+        mes=""; altura=""; peso="";
+          j++; aña=0;
+        while(!Validaciones.isMonth(mes)){
+          mes=JOptionPane.showInputDialog("Por favor digite el mes en que se realiza la consulta");
+            if (Validaciones.isMonth(mes)) {
+        System.out.println("Por favor digite el mes en que se realiza la consulta: "+mes);        
+            }else if (mes.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+        } 
+        while(!Validaciones.isDouble(altura)){  
+          altura=JOptionPane.showInputDialog("Por favor digite la altura en cm de la persona");   
+            if(Validaciones.isDouble(altura)){
+            System.out.println("Por favor digite la altura en cm de la persona:        "+altura);
+            }else if (altura.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+        } 
+         
+        while(!Validaciones.isDouble(peso)){  
+          peso=JOptionPane.showInputDialog("Por favor digite el peso de la persona");   
+            if(Validaciones.isDouble(peso)){
+            System.out.println("Por favor digite el peso de la persona:                "+peso);
+            }else if (peso.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+        } 
+     classroom.get(ind).addHisIMC(mes, Double.parseDouble(altura), Double.parseDouble(peso));
       System.out.println("\n------------------------------------------------------------------\n");
         do{
           aña=Integer.parseInt(JOptionPane.showInputDialog("¿Desea seguir registrando? si(1) / no(2)"));
@@ -129,7 +158,8 @@ JOptionPane.showMessageDialog(null, "Opcion no valida");
         }while (aña!=1 && aña!=2);
         } 
         System.out.println("\n\n\n\n\n\n\n");
-        this.loadMenu();
+        //this.loadMenu();
+        this.menuIMC();
     break;
         case "2":
         String nombreColumnas[] = {"MES","ALTURA","PESO","MASA CORPORAL","ESTADO"}; 
@@ -139,7 +169,7 @@ JOptionPane.showMessageDialog(null, "Opcion no valida");
         
         if(classroom.size()>0){
         for (int m= 0; m < classroom.get(ind).getHisIMC().size(); m++){ 
-    String datos[] = {classroom.get(ind).getHisIMC().get(m).getMes(), String.valueOf(classroom.get(ind).getHisIMC().get(m).getAltura())+" cm", String.valueOf(classroom.get(ind).getHisIMC().get(m).getPeso())+" kg", String.valueOf(classroom.get(ind).getHisIMC().get(m).calMasaC())+" kg/m^2",classroom.get(ind).getHisIMC().get(m).estadoIMC()};    
+    String datos[] = {classroom.get(ind).getHisIMC().get(m).getMes(), String.valueOf(classroom.get(ind).getHisIMC().get(m).getAltura())+" cm", String.valueOf(classroom.get(ind).getHisIMC().get(m).getPeso())+" kg", String.valueOf(classroom.get(ind).getHisIMC().get(m).calMasaC())+" kg/m\u00B2",classroom.get(ind).getHisIMC().get(m).estadoIMC()};    
     modelo.addRow(datos);
     } 
     name=classroom.get(ind).getFullnombre();    
@@ -192,25 +222,103 @@ tabla.setFont(new Font("Tahoma", Font.PLAIN, 12));
         int i=0, aña=0;
         boolean act=true;
       /*Inicio*/ while (act) {
+        n=""; a=""; fN=""; id=""; g=""; d=""; em=""; tel=""; cel="";  
         i++; aña=0;
-        System.out.print("Digite nombre de persona "+i+":              ");
-        n=leer.readLine();     
-        System.out.print("Digite apellido de persona "+i+":            ");
-        a=leer.readLine(); 
-        System.out.print("Digite fecha de nacimiento de persona "+i+": ");
-        fN=leer.readLine(); 
-        System.out.print("Digite identificacion de persona "+i+":      ");
-        id=leer.readLine(); 
-        System.out.print("Digite genero de persona "+i+":              ");
-        g=leer.readLine(); 
-        System.out.print("Digite direccion de persona "+i+":           ");
-        d=leer.readLine(); 
-        System.out.print("Digite email de persona "+i+":               ");
-        em=leer.readLine(); 
-        System.out.print("Digite telefono de persona "+i+":            ");
-        tel=leer.readLine(); 
-        System.out.print("Digite celular de persona "+i+":             ");
-        cel=leer.readLine();  
+        
+        
+        while(n.isEmpty()){
+        n=JOptionPane.showInputDialog("Digite nombre de persona "+i);
+          if (!n.isEmpty()) {
+        System.out.println("Digite nombre de persona "+i+":              "+n);
+          }else{
+          JOptionPane.showMessageDialog(null, "Llene el campo");
+          }
+        }      
+          while(a.isEmpty()) {
+        a=JOptionPane.showInputDialog("Digite apellido de persona "+i);
+          if (!a.isEmpty()) {
+        System.out.println("Digite apellido de persona "+i+":            "+a);
+          }else{
+          JOptionPane.showMessageDialog(null, "Llene el campo");
+          }    
+          }
+        
+          LocalDate hoy = LocalDate.now();
+          DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+          while(!Validaciones.rangoData(fN, "01/01/1900", hoy.format(fmt).toString())){
+        fN=JOptionPane.showInputDialog("Digite fecha de nacimiento de persona "+i);     
+              if (Validaciones.rangoData(fN, "01/01/1900", hoy.format(fmt).toString())) {
+        System.out.println("Digite fecha de nacimiento de persona "+i+": "+fN);          
+              }else if (fN.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+          } 
+        
+          while(!Validaciones.isID(id)){
+        id=JOptionPane.showInputDialog("Digite identificacion de persona "+i);     
+              if (Validaciones.isID(id)) {
+        System.out.println("Digite identificacion de persona "+i+":      "+id);          
+              }else if (id.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+          }
+        
+        while(!Validaciones.isSexo(g)){
+        g=JOptionPane.showInputDialog("Digite genero de persona "+i);
+            if (Validaciones.isSexo(g)) {
+        System.out.println("Digite genero de persona "+i+":              "+g);        
+            }else if (g.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+        }
+
+        while(d.isEmpty()){
+        d=JOptionPane.showInputDialog("Digite direccion de persona "+i);
+          if (!d.isEmpty()) {
+        System.out.println("Digite direccion de persona "+i+":           "+d);
+          }else{
+              JOptionPane.showMessageDialog(null, "Llene el campo");
+              }
+        }
+        
+        while(!Validaciones.isEmail(em)){
+        em=JOptionPane.showInputDialog("Digite email de persona "+i);    
+            if (Validaciones.isEmail(em)) {
+        System.out.println("Digite email de persona "+i+":               "+em);        
+            }else if (em.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+        }
+        
+       while(!Validaciones.isTelefono(tel)){
+        tel=JOptionPane.showInputDialog("Digite telefono de persona "+i);   
+            if (Validaciones.isTelefono(tel)) {
+        System.out.println("Digite telefono de persona "+i+":            "+tel);        
+            }else if (tel.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+        }
+        
+        while(!Validaciones.isCelular(cel)){
+        cel=JOptionPane.showInputDialog("Digite celular de persona "+i);    
+            if (Validaciones.isCelular(cel)) {
+        System.out.println("Digite celular de persona "+i+":             "+cel);        
+            }else if (cel.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Llene el campo");    
+              }else{
+              JOptionPane.showMessageDialog(null, "El dato ingresado es incorrecto");
+              }
+        }
         this.classroom.add(new Persona(n, a, fN, id, g, d, em, tel, cel));
         System.out.println("\n------------------------------------------------------------------\n");
         do{

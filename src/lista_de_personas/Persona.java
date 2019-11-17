@@ -76,7 +76,7 @@ public class Persona {
     }
 
     public String getGenero() {
-        return genero;
+        return genero.toUpperCase();
     }
 
     public void setGenero(String genero) {
